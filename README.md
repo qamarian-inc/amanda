@@ -1,10 +1,12 @@
 # Amanda
 
-Amanda is a framework for developing cloud applications. This framework is based on Golang's package "net/http"; in other words, it's an HTTP-based framework. This framework comes with components like logger, alert raiser (a component that helps send 'distress notification' emails to the admin), and DBMS connection pool manager; in other words, all you possibly need to do, is to add new services.
+Amanda is a framework for developing cloud applications. This framework is based on Golang's package "net/http"; in other words, it's an HTTP-based framework. This framework comes with components like logger, alert raiser (a component that helps send 'distress notification' emails to the admin), and DBMS connection pool manager; in other words, all you possibly need to do, is to add more services.
 
 
 
-Using this framework is as simple as downloading it, and adding more services to it.
+## Using Amanda
+
+Using this framework is as simple as downloading its source code, and adding more services to it.
 
 > In case you don't understand what is meant by a service, a service is a function that serves an HTTP request. See shutdown\_Manager (in file cx\_Shutdown\_Manager.go), to see how services are designed.
 
