@@ -6,7 +6,7 @@ Amanda is a framework for developing cloud applications. This framework is based
 
 ## Using Amanda
 
-Using this framework is as simple as downloading its source code, and adding more services to the source code.
+Using this framework is as simple as downloading its source code, adding more services to the source code, then compiling the code, to produce your cloud application.
 
 > In case you don't understand what is meant by a service, a service is a function that serves an HTTP request. See shutdown\_Manager (in file cx\_Shutdown\_Manager.go), to see how services are designed.
 
