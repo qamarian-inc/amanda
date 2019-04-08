@@ -1,0 +1,9 @@
+# This is a configuration file. Data serialization format in use: YAML.
+
+# "Go_Max_Procs" is an important data that must be set. The value of this data represents the max number of Golang processors the software is allowed to use. Value should be type integer.
+Go_Max_Procs: 1
+
+# "Service_Addr" is an important data that must be set. The value of this data represents the network address on which services of the software should be provided. Value of Service_Addr.Addr is expected to be type string, while value of Service_Addr.Port is expected to be type integer.
+Service_Addr:
+  Addr: "127.0.0.1"
+  Port: 1251

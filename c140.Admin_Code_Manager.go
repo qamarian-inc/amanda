@@ -35,7 +35,7 @@ func init () { // This function generates a new admin code, and saves the code i
         // ... }
 }
 
-func admin_Code_Manager () (string) {
+func admin_Code_Manager () (string) { // The function provides to other fuctions, the admin code currently in use.
 	return admin_Code_Manager___admin_Code
 }
 

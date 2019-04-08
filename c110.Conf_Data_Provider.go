@@ -8,6 +8,8 @@ import (
         "os"
 )
 
+/* This component makes the use of configuration files possible */
+
 func init () { // Initializes this component.
 	
 	configuration, errX := viper_Interface.New_Viper (CONF_FILE, "yaml")
@@ -21,7 +23,11 @@ func init () { // Initializes this component.
         conf_Data_Provider___configuration = configuration
 }
 
-func conf_Data_Provider (data_Name string) (string, error) { // This function provides the value of the configuration data requested. If a configuration data is set in the configuration file, the value of the data and nil error, are returned. However, if a configuration data is not set, an empty string and error "conf_Data_Provider___DATA_NOT_SET", are returned.
+func conf_Data_Provider (data_Name string) (string, error) { /* This function provides the value of the configuration data requested.
+
+	If a configuration data is set in the configuration file, the value of the data and nil error, are returned.
+
+	If a configuration data is not set, an empty string and error "conf_Data_Provider___DATA_NOT_SET", are returned. */
 
 	// Error is returned if the data is not set, in the configuration file.
 	if ! conf_Data_Provider___configuration.IsSet (data_Name) {

@@ -1,16 +1,8 @@
 # Amanda
 
-Amanda is a framework for developing cloud applications. This framework is based on Golang's package "net/http"; in other words, it's an HTTP-based framework. This framework comes with components like logger, alert raiser (a component that helps send 'distress notification' emails to the admin), and DBMS connection pool manager; in other words, all you possibly need to do, is to add more services.
+Amanda is a framework for developing cloud applications, and it is HTTPS-based. This framework takes a form quite different from many other frameworks. Rather than existing as a package that is imported, the framework is a software on its own. It can be turned into a custom cloud application, by expanding its capabilites and/or adding services to it.
 
+The framework comes with useful components like logger, and alert raiser. The alert raiser is a component which can be used to send 'distress emails' to the admin of a cloud application. For instances, if something happens at runtime and requires immediate attention of the admin, the alert raiser can be used to send an email to the admin. The framework furthermore supports the use of configuration file.
 
-
-## Using Amanda
-
-Using this framework is as simple as downloading its source code, adding more services to the source code, then compiling the code, to produce your cloud application.
-
-> In case you don't understand what is meant by a service, a service is a function that serves an HTTP request. See shutdown\_Manager (in file cx\_Shutdown\_Manager.go), to see how services are designed.
-
-After adding your desired services, remember to modify the constants in file "cz\_Global.go", as appropriate, then register those new services, as appropriate.
-
-> Registering a service is done by adding it to either variable software\_Service or admin\_Service, both of which can be found in file "cz\_Global.go". See file "cz\_Global.go", for an example.
+Before doing anything with this framework, ensure all constants in file "cx30.Global.go" have been modified as appropriate.
 

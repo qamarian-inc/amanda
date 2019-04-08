@@ -9,29 +9,29 @@ import (
 	"strconv"
 )
 
-/* This component helps send email alerts to the admin of the software. On startup, the alert raiser is started. To ask alert raiser to send an email, to the admin, use function alert_Raiser___Raise_Alert ().
+/* This component helps sends distress email alerts to the admin of the software. On startup, the alert raiser is started. To ask alert raiser to send an email, to the admin, use function alert_Raiser___Raise_Alert ().
 
 You can shutdown the alert raiser, using alert_Raiser___Shutdown ().
 */
 
-func init () { // This function caches all data needed by alert_Raiser (). The data it caches are expected to set as operating system environmental variables.
+func init () { // This function fetches all data needed by alert_Raiser (), then starts alert_Raiser () itself.
 
-	// Caching the email address alerts are sent to.
+	// Fetching the email address alerts should be sent to.
 	alert_Destination_Email := os.Getenv (ALERT_DESTINATION_EMAIL)
 	if alert_Destination_Email == "" {
 		output (fmt.Sprintf ("Startup Error: Enviromental variable '%s' (ALERT_DESTINATION_EMAIL) is not set: init () in c130_alert_Raiser.go", ALERT_DESTINATION_EMAIL))
 		os.Exit (1)
 	}
 
-	// Caching the address of the email server used to send alerts.
+	// Fetching the address of the email server used to send alerts.
 	alert_Email_Server_Addr := os.Getenv (ALERT_RAISER_EMAIL_SERVER_ADDR)
 	if alert_Email_Server_Addr == "" {
 		output (fmt.Sprintf ("Startup Error: Enviromental variable '%s' (ALERT_RAISER_EMAIL_SERVER_ADDR) is not set: init () in c130_alert_Raiser.go", ALERT_RAISER_EMAIL_SERVER_ADDR))
 		os.Exit (1)
 	}
 
-	// Caching the port of the email server used to send alerts. { ...
-	alert_Email_Server_Port := os.Getenv ("")
+	// Fetching the port of the email server used to send alerts. { ...
+	alert_Email_Server_Port := os.Getenv (ALERT_RAISER_EMAIL_SERVER_PORT)
 	if alert_Email_Server_Port == "" {
 		output (fmt.Sprintf ("Startup Error: Enviromental variable '%s' (ALERT_RAISER_EMAIL_SERVER_PORT) is not set: init () in c130_alert_Raiser.go", ALERT_RAISER_EMAIL_SERVER_PORT))
 		os.Exit (1)
@@ -43,7 +43,7 @@ func init () { // This function caches all data needed by alert_Raiser (). The d
 	}
 	// ... }
 
-	// Caching the email address alert_Raiser () uses to send alerts. { ...
+	// Fetching the email address alert_Raiser () uses to send alerts. { ...
 	alert_Email_Username := os.Getenv (ALERT_RAISER_EMAIL_ADDR_ENV_VAR)
 	if alert_Email_Username == "" {
 		output (fmt.Sprintf ("Startup Error: Enviromental variable '%s' (ALERT_RAISER_EMAIL_ADDR_ENV_VAR) is not set: init () in c130_alert_Raiser.go", ALERT_RAISER_EMAIL_ADDR_ENV_VAR))
@@ -51,7 +51,7 @@ func init () { // This function caches all data needed by alert_Raiser (). The d
 	}
 	// ... }
 
-	// Caching the password of the email address alert_Raiser () uses to send alerts. { ...
+	// Fetching the password of the email address alert_Raiser () uses to send alerts. { ...
 	alert_Email_Password := os.Getenv (ALERT_RAISER_EMAIL_PASS_ENV_VAR)
 	if alert_Email_Password == "" {
 		output (fmt.Sprintf ("Startup Error: Enviromental variable '%s' (ALERT_RAISER_EMAIL_PASS_ENV_VAR) is not set: init () in c130_alert_Raiser.go", ALERT_RAISER_EMAIL_PASS_ENV_VAR))
@@ -63,7 +63,7 @@ func init () { // This function caches all data needed by alert_Raiser (). The d
 	go alert_Raiser (alert_Destination_Email, alert_Email_Server_Addr, server_Port_As_Int, alert_Email_Username, alert_Email_Password)
 }
 
-func alert_Raiser (alert_Destination_Email, alert_Email_Server_Addr string, alert_Email_Server_Port int, alert_Email_Username, alert_Email_Password string) { // This function sends email alerts to the admin email provided.
+func alert_Raiser (alert_Destination_Email, alert_Email_Server_Addr string, alert_Email_Server_Port int, alert_Email_Username, alert_Email_Password string) { // This function sends email alerts to the admin email provided. It runs as a daemon (goroutine), and alert_Raiser___Raise_Alert () can be used to communicate with it.
 
 	// In case any panic occurs, the panic is prevented from getting out.
 	defer func () {
