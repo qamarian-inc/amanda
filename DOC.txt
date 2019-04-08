@@ -1,0 +1,10 @@
+Amanda is a framework for developing cloud applications. This framework is based on Golang's package "net/http"; in other words, it's an HTTP-based framework.
+
+To use this framework, first and foremost, modify the constants in file "cz_Global.go", as appropriate. Afterwards, create your desired software services and admin services. In case you don't understand what is meant by a service, a service is a function that serves an HTTP request. See shutdown_Manager (in file cx_Shutdown_Manager.go), to see how services are designed.
+
+After creating your desired services, proceed to register them as software services or admin services, as appropriate. Registering a service is as simple as adding its "service data" to variable software_Service or admin_Service, both of which can be found in file "cz_Global.go". Example:
+
+        software_Service []service = []service {
+                service {"/some/http/path", some_Service_Provider}
+        }
+
