@@ -30,4 +30,9 @@ var (
 	}
 
 	// This framework uses a third-party router (github.com/gorilla/mux). You can learn more about the router, to understand what type of routes are supported.
+
+	// Services that require initialization, at startup time, should have the name of their initialization function here.
+	services_Init []func () = []func () {
+		shutdown_Manager___Init, // The initialization function of service provider "shutdown_Manager".
+	}
 )

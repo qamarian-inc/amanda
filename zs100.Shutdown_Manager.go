@@ -6,6 +6,10 @@ import (
         "net/http"
 )
 
+func shutdown_Manager___Init () {
+        output ("Note: Default shutdown service in use.")
+}
+
 var shutdown_Manager service_Provider = func (response_Res http.ResponseWriter, request *http.Request) { // This service provider is an admin service provider. It is considered an object, and its job is to gracefully shutdown this software.
 
         // If panic occurs while serving request, it is logged. { ...

@@ -31,11 +31,17 @@ func init () { // Initializes this component.
 
 	// Starting the logger.
 	go func () {
+		// If a panic should occur, it is prevented from affecting other routines.
+		defer func () {
+			recover ()
+		} ()
+
 		const LOGGER_BUFFER_SIZE = 0
                 errM := logger___Logging_Info.Logger (LOGGER_BUFFER_SIZE)
 
                 if errM != nil {
-                        output ("State: Logger has shutdown. Reason: " + errM.Error ())
+                        output ("State: Logger has shutdown due to an error. Error: " + errM.Error ())
+                        alert_Raiser___Raise_Alert ("Logger has shutdown due to an error. Error: " + errM.Error ())
                 }
         } ()
 }
