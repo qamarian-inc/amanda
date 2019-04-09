@@ -5,7 +5,7 @@ import (
         "os"
 )
 
-func init () { // This function generates a new admin code, and saves the code in a file named the ID of the software.
+func init () { // This function generates a new admin code, and saves the code in a file named "zzz.Admin_Code.txt"
 
 	// Generating code for admin services. { ...
         admin_Code, errX :=  strings.CryptoSafe_Unique_Random_32 ()
@@ -19,7 +19,7 @@ func init () { // This function generates a new admin code, and saves the code i
         // ... }
 
         // Saving admin code in file. { ...
-        code_File, err2 := os.OpenFile (SOFTWARE_ID, os.O_CREATE|os.O_WRONLY, 0330) 
+        code_File, err2 := os.OpenFile ("zzz.Admin_Code.txt", os.O_CREATE|os.O_WRONLY, 0330) 
         if err2 != nil {
                 output ("Startup Error: %s ---> \n Saving admin code in file: init () in c140_Admin_Code_Manager.go ()" + err2.Error ())
                 os.Exit (1)

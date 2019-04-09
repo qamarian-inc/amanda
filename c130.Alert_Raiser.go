@@ -65,11 +65,16 @@ func init () { // This function fetches all data needed by alert_Raiser (), then
 
 func alert_Raiser (alert_Destination_Email, alert_Email_Server_Addr string, alert_Email_Server_Port int, alert_Email_Username, alert_Email_Password string) { // This function sends email alerts to the admin email provided. It runs as a daemon (goroutine), and alert_Raiser___Raise_Alert () can be used to communicate with it.
 
-	// In case any panic occurs, the panic is prevented from getting out.
+
+	// In case any panic occurs, the panic is logged.
 	defer func () {
-		recover ()
-		output (`State: Alert raiser "alert_Raiser ()" is down.`)
+		panic_Reason := recover ()
+		if panic_Reason != nil {
+			defer logger (`alert_Raiser () paniced.`)
+		}
 	} ()
+
+	defer output (`State: Alert raiser "alert_Raiser ()" is down.`)
 
 	// Creating channel needed to receive new alerts meant to be sent.
 	alert_Raiser___alert_Channel = make (chan *alert)
@@ -93,13 +98,13 @@ func alert_Raiser (alert_Destination_Email, alert_Email_Server_Addr string, aler
 		case alert, ok := <- alert_Raiser___alert_Channel:
 
 			if ok == true {
-				mail_Subject := fmt.Sprintf ("Pavi Alert: %s", SOFTWARE_ID)
+				mail_Subject := fmt.Sprintf ("%s (%s) Alert", SOFTWARE_ID, SOFTWARE_NAME)
 
 				// Sending alert.
 				errY := mailing_Info.Send (alert_Destination_Email, mail_Subject, alert.alert_Message)
 
 				if errY != nil {
-					error_Message := fmt.Sprintf ("%s ---> \n Sending alert: init () in c130_alert_Raiser.go in %s", errY.Error (), SOFTWARE_ID)
+					error_Message := fmt.Sprintf ("%s ---> \n Sending alert: init () in c130_Alert_Raiser.go in %s", errY.Error (), SOFTWARE_ID)
 					alert.err = errors.New (error_Message)
 				}
 			}

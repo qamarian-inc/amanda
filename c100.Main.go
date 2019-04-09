@@ -14,6 +14,11 @@ func main () { // This function helps the software start its server. All service
 
 	output (fmt.Sprintf ("Ware '%s' (%s) is starting up (framework: Amanda)...", SOFTWARE_NAME, SOFTWARE_ID))
 
+        // Initializing services requiring initialization at startup time.
+        for _, service := range services_Init {
+                service ()
+        }
+
 	// If a panic should occur, the panic is logged. { ...
         defer func () {
                 panic_Reason := recover ()
@@ -84,9 +89,12 @@ func main () { // This function helps the software start its server. All service
         output ("State: Server has shutdown!")
 
         // Log is recorded, if server shutdowns due to an error.
-        if errJ != nil && errJ != http.ErrServerClosed { 
+        if errJ != nil && errJ != http.ErrServerClosed {
+                output (fmt.Sprintf ("Runtime Error: Server: %s", errJ.Error ()))
                 logger (fmt.Sprintf ("%s ---> \n Running server: main ()", errJ.Error ()))
-                output (fmt.Sprintf ("Runtime Error: Service Server:", errJ.Error ()))
+
+                // Gracefully shutting down server.
+                main___Shutdown_Servers ()
         }
 
         // If server stopped because it was asked to, main () waits for os.Exit () to be called in main___Shutdown_Servers (), just to ensure graceful shutdown.
