@@ -12,7 +12,7 @@ import (
 
 func main () { // This function helps the software start its server. All services added to variable 'software_Service' (in file ze30.Global.go), will be available via the server.
 
-	output (fmt.Sprintf ("Ware '%s' (%s) is starting up (framework: Amanda)...", SOFTWARE_NAME, SOFTWARE_ID))
+	output (fmt.Sprintf ("State: Ware '%s' (%s) is starting up (framework: Amanda)...", SOFTWARE_NAME, SOFTWARE_ID))
 
         // Initializing services requiring initialization at startup time.
         for _, service := range services_Init {
