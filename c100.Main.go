@@ -59,13 +59,6 @@ func main () { // This function helps the software start its server. All service
 	}
 	// ... }
 	
-	// Checking if TLS certificate and private key are available. { ...
-	if os.Getenv (TLS_CERT_FILEPATH) == "" || os.Getenv (PRIV_KEY_FILEPATH) == "" {
-		output (fmt.Sprintf ("Startup Error: Filepath of TLS certificate and/or private key, are not set --> \n Fetching filepaths of TLS certificate and private key, from environmetal variables %s and %s respectively: main ()", TLS_CERT_FILEPATH, PRIV_KEY_FILEPATH))
-		os.Exit (1)
-	}
-	// ... }
-
 	// Creating server. { ...
 	main___server_Info := &http.Server {	
                 Addr:            software_Addr + ":" + software_Port,
@@ -81,10 +74,32 @@ func main () { // This function helps the software start its server. All service
         main___server_Info.Handler = routerX
         // ... }
 
-        output ("State: Server will start up now!")
+        // Startup notification. { ...
+        http_Protocol_In_Use := "HTTPS"
+        if USE_TLS == false {
+                http_Protocol_In_Use = "HTTP"
+        }
 
-        // Starting server.
-        errJ := main___server_Info.ListenAndServeTLS (os.Getenv (TLS_CERT_FILEPATH), os.Getenv (PRIV_KEY_FILEPATH)) // Note, this function blocks.
+        output (fmt.Sprintf ("App will start up now! NETWORK ADDRESS: %s:%s (%s)", software_Addr, software_Port, http_Protocol_In_Use))
+        // ... }
+
+        // Starting server. { ...
+        errJ := *new (error)
+
+        if USE_TLS == true { // HTTPS startup.
+
+                // Checking if TLS certificate and private key are available.
+                if os.Getenv (TLS_CERT_FILEPATH) == "" || os.Getenv (PRIV_KEY_FILEPATH) == "" {
+                        output (fmt.Sprintf ("Startup Error: Filepath of TLS certificate and/or private key, are not set --> \n Fetching filepaths of TLS certificate and private key, from environmetal variables %s and %s respectively: main ()", TLS_CERT_FILEPATH, PRIV_KEY_FILEPATH))
+                        os.Exit (1)
+                }
+
+                errJ = main___server_Info.ListenAndServeTLS (os.Getenv (TLS_CERT_FILEPATH), os.Getenv (PRIV_KEY_FILEPATH)) // Note, this function blocks.
+        } else { // HTTP startup.
+
+                errJ = main___server_Info.ListenAndServe () // Note, this function blocks.
+        }
+        // ... }
                 
         output ("State: Server has shutdown!")
 
