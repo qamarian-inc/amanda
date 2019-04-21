@@ -17,14 +17,6 @@ const (
 		TLS_CERT_FILEPATH string = "AMANDA_TLS_CERT" // The environmental variable name of the filepath of a TLS certificate that can be used.
 		PRIV_KEY_FILEPATH string = "AMANDA_PRIV_KEY" // The environmental variable name of the filepath of the TLS private key.
 	// ... }
-
-	LOG_FILE_DIR_ENV_VAR string = "AMANDA_LOG_FILES_PATH" // The environmental variable name of the directory where the log file of the software should be saved.
-
-	ALERT_RAISER_EMAIL_ADDR_ENV_VAR string = "AMANDA_ALERT_EMAIL_USERNAME" // The environmental variable name of the email address alert raiser can use to send emails to the admin.
-	ALERT_RAISER_EMAIL_PASS_ENV_VAR string = "AMANDA_ALERT_EMAIL_PASSWORD" // The environmental variable name of the password of the email specified in 'ALERT_RAISER_EMAIL_ADDR_ENV_VAR'.
-	ALERT_RAISER_EMAIL_SERVER_ADDR string = "AMANDA_ALERT_EMAIL_SERVER_ADDR" // The environmental variable name of the IP address/domain name of the email server of the email specified in 'ALERT_RAISER_EMAIL_ADDR_ENV_VAR'.
-	ALERT_RAISER_EMAIL_SERVER_PORT string = "AMANDA_ALERT_EMAIL_SERVER_PORT" // The environmental variable name of the port of the email server of the email specified in 'ALERT_RAISER_EMAIL_ADDR_ENV_VAR'.
-	ALERT_DESTINATION_EMAIL string = "AMANDA_ALERT_DESTINATION_EMAIL" // The environmental variable name of the email that alerts should be sent to.
 )
 
 var (

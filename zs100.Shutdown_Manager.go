@@ -12,15 +12,6 @@ func shutdown_Manager___Init () {
 
 var shutdown_Manager service_Provider = func (response_Res http.ResponseWriter, request *http.Request) { // This service provider is an admin service provider. It is considered an object, and its job is to gracefully shutdown this software.
 
-        // If panic occurs while serving request, it is logged. { ...
-        defer func () {
-                panic_Reason := recover ()
-                if panic_Reason != nil {
-                        logger ("shutdown_Manager () paniced while serving a request.")
-                }
-        } ()
-        // ... }
-
         // If admin code provided is invalid: request is not granted and error is returned.
         if admin_Code_Manager () != mux.Vars (request)["admin_Code"] { 
                 response_Res.WriteHeader (http.StatusUnauthorized)

@@ -12,22 +12,12 @@ import (
 
 func main () { // This function helps the software start its server. All services added to variable 'software_Service' (in file ze30.Global.go), will be available via the server.
 
-	output (fmt.Sprintf ("Ware '%s' (%s) is starting up (framework: Amanda)...", SOFTWARE_NAME, SOFTWARE_ID))
+	output (fmt.Sprintf ("Ware '%s' (%s) is starting up (framework: Amanda Lite)...", SOFTWARE_NAME, SOFTWARE_ID))
 
         // Initializing services requiring initialization at startup time.
         for _, service := range services_Init {
                 service ()
         }
-
-	// If a panic should occur, the panic is logged. { ...
-        defer func () {
-                panic_Reason := recover ()
-                if panic_Reason != nil {
-                        logger ("main () paniced")
-                }
-                os.Exit (1)
-        } ()
-        // ... }
 
 	// Using the value of 'GOMAXPROCS' specified in the configuration file. { ...
 	go_Max_Procs, errX := conf_Data_Provider ("Go_Max_Procs")
@@ -106,7 +96,6 @@ func main () { // This function helps the software start its server. All service
         // Log is recorded, if server shutdowns due to an error.
         if errJ != nil && errJ != http.ErrServerClosed {
                 output (fmt.Sprintf ("Runtime Error: Server: %s", errJ.Error ()))
-                logger (fmt.Sprintf ("%s ---> \n Running server: main ()", errJ.Error ()))
 
                 // Gracefully shutting down server.
                 main___Shutdown_Servers ()
@@ -122,28 +111,8 @@ func main () { // This function helps the software start its server. All service
 
 func main___Shutdown_Servers () { // This function is an interface of main (); it tells main () to shutdown the server of this software. To gracefully shutdown this software, this function can be called.
 
-        // If a panic should occur during shutdown, the panic is logged. { ...
-        defer func () {
-                panic_Reason := recover ()
-                if panic_Reason != nil {
-                        logger ("main___Shutdown_Servers () paniced during graceful shutdown")
-                }
-                os.Exit (1)
-        } ()
-        // ... }
-
-        // Shutting down server gracefully. { ...
-        errX := main___server_Info.Shutdown (context.Background ())
-        if errX != nil {
-                error_Message := fmt.Sprintf ("%s ---> \n Gracefully shutting down service server main___Shutdown_Servers ()", errX.Error ())
-                logger (error_Message)
-        }
-        // ... }
-
-        // Shutting down other components that should be explicitly shutdown. { ...
-        logger___Shutdown ()
-        alert_Raiser___Shutdown ()
-        // ... }
+        // Shutting down server gracefully.
+        main___server_Info.Shutdown (context.Background ())
 
         // Finally halting the software.
         os.Exit (0)
