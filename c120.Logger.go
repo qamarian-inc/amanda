@@ -16,37 +16,55 @@ To gracefully shutdown the logger, call function: logger___Shutdown (). This fun
 
 func init () { // Initializes this component.
 
-	// Getting the log files directory. { ...
-	if os.Getenv (LOG_FILE_DIR_ENV_VAR) == "" {
-		output (fmt.Sprintf ("Startup Error: Environmental variable '%s' (LOG_FILE_DIR_ENV_VAR) is not set: init () in c120_Logger.go", LOG_FILE_DIR_ENV_VAR))
+	// If the built-in logger of this framework (in other words, this component) is not the default logger in use, this component would not bother initializing, as it assumes it would not be used.
+	if RECORD_LOG != logger___Record {
+		return
+	}
+
+	// Getting the filepath of the log file. { ...
+	log_File_Path, errT := conf_Data_Provider ("Log_File_Path")
+
+	if errT != nil {
+		output (fmt.Sprintf ("Startup Error: %s ---> Getting the filepath of app's log file: init () in c120_Logger.go", errT.Error ()))
 		os.Exit (1)
 	}
 	// ... }
 
-	// Creating data needed to run the external logger. { ...
-	log_File_Path := fmt.Sprintf ("%s%c%s.log", os.Getenv (LOG_FILE_DIR_ENV_VAR), os.PathSeparator, SOFTWARE_ID)
-	
-	logger___Logging_Info = &qamarian_Logger.Logging_Info {Log_File: log_File_Path}
-	// .. }
+	// The filepath of the app's log file is expected to be onion-formatted, and this section does the decoding of the filepath into its real form. { ...
+	log_File_Path, errV := onion_Filepath_Decoder (log_File_Path)
+
+	if errT != nil {
+		output (fmt.Sprintf ("Startup Error: %s ---> Decoding the filepath of app's log file, from its onion form into its real form: init () in c120_Logger.go", errT.Error ()))
+		os.Exit (1)
+	}
+	// ... }
+
+	logger___Logging_Info = &qamarian_Logger.Logging_Info {Log_File: log_File_Path} // Creating data needed to run the external logger.
 
 	// Starting the logger.
-	go func () {
-		// If a panic should occur, it is prevented from affecting other routines.
-		defer func () {
-			recover ()
-		} ()
-
-		const LOGGER_BUFFER_SIZE = 0
-                errM := logger___Logging_Info.Logger (LOGGER_BUFFER_SIZE)
-
-                if errM != nil {
-                        output ("State: Logger has shutdown due to an error. Error: " + errM.Error ())
-                        alert_Raiser___Raise_Alert ("Logger has shutdown due to an error. Error: " + errM.Error ())
-                }
-        } ()
+	go logger ()
 }
 
-func logger (new_Log string) (error) { // Call this function, to record a new log. On success, nil error is returned, otherwise a non-nil error is returned.
+func logger () {
+	// If a panic should occur, it is prevented from affecting other routines.
+	defer func () {
+		recover ()
+	} ()
+
+        errM := logger___Logging_Info.Logger (0)
+
+        if errM != nil {
+                output ("State: Logger has shutdown due to an error. Error: " + errM.Error ())
+                CRITICAL_EVENT_ACTION ("Logger has shutdown due to an error. Error: " + errM.Error ())
+        }
+}
+
+func logger___Record (new_Log string) (error) { // Call this function, to record a new log. On success, nil error is returned, otherwise a non-nil error is returned.
+
+	// If the built-in logger of this framework (in other words, this component) is not the default logger in use, this function tells the caller.
+	if RECORD_LOG != logger___Record {
+		return logger___NOT_RUNNING_NOT_DEFAULT
+	}
 
 	// If a panic should occur, it is prevented from affecting caller of this function.
 	defer func () {
@@ -61,6 +79,11 @@ func logger (new_Log string) (error) { // Call this function, to record a new lo
 
 func logger___Shutdown () (error) { // Call this function, to gracefully shutdown the logger.
 
+	// If the built-in logger of this framework (in other words, this component) is not the default logger of the app, this function ignores the shutdown request since this component would not be running.
+	if RECORD_LOG != logger___Record {
+		return nil
+	}
+
 	// If a panic should occur, it is prevented from affecting caller of this function.
 	defer func () {
 		recover ()
@@ -72,6 +95,6 @@ func logger___Shutdown () (error) { // Call this function, to gracefully shutdow
 }
 
 var (
-	logger___VAR_NOT_SET error = errors.New ("The environmental variable is not set.")
 	logger___Logging_Info *qamarian_Logger.Logging_Info
+	logger___NOT_RUNNING_NOT_DEFAULT errors = errors.New ("This logger is not running since it is not the default logger of the app.")
 )

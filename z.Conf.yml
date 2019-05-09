@@ -1,0 +1,28 @@
+# This is a configuration file for Amanda wares; edit this file as needed. You are also free to add new configuration data to this file. Data serialization format in use: YAML.
+
+# It is always good to give your software a name (when using this framework). Change the value of this data to whatever name you want to give your software.
+Software_Name: "Amanda Ware"
+
+# "Go_Max_Procs" is an important data that must be set. The value of this data represents the max number of Golang's logical processors the software can use. Value should be type integer.
+Go_Max_Procs: 1
+
+# "Service_Addr" is an important data that must be set. The value of this data represents the network address on which services of the software should be provided. Value of Service_Addr.Addr is expected to be type string, while value of Service_Addr.Port is expected to be type integer.
+Service_Addr:
+  Addr: "127.0.0.1"
+  Port: 1251
+
+# This data represents a set of data that will be needed by the server.
+Server_Info:
+  Net_IO_Duration_Before_Timeout: 60 # This data is an important one, and must be set. It values signifies the maximum number of seconds that can elapse before an input/output times out. Value should be an integer type.
+  HTTP_Max_Request_Header_Size: 10240 # This data is an important one, and must be set. It values signifies the maximum HTTP header size (in bytes) that can be acceptable by the server. Value should be an integer type.
+
+# This data represents the filepaths of the files the server will need for TLS connections (if your app will be using HTTPS).
+TLS_Res:
+  Cert_Bundle: "" # If you want the server to use HTTPS (instead of HTTP), set this data to the filepath of your TLS certificate bundle.
+  Private_Key: "" # If you want the server to use HTTPS (instead of HTTP), set this data to the filepath of your TLS private key.
+
+  # Note: The two data in this block are required for HTTPS. You can not set one and leave the other. If you want plain HTTP, the value of both data should be an empty string.
+
+Log_File_Path: "*/log.txt"
+
+# FEEL FREE TO ADD MORE CONFIGURATION DATA BELOW

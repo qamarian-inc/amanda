@@ -60,7 +60,7 @@ func main () { // This function helps the software start its server. All service
 		os.Exit (1)
 	}
 	// ... }
-	
+
 	// Creating server. { ...
         net_IO_Duration_Before_Timeout, errP := conf_Data_Provider ("Server_Info.Net_IO_Duration_Before_Timeout")
                 // Error handling.
@@ -90,7 +90,7 @@ func main () { // This function helps the software start its server. All service
                         os.Exit (1)
                 }
 
-	main___server_Info := &http.Server {	
+	main___server_Info := &http.Server 
                 Addr:            software_Addr + ":" + software_Port,
                 ReadTimeout:     net_IO_As_Int * time.Second,
                 WriteTimeout:    net_IO_As_Int * time.Second,

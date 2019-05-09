@@ -1,8 +1,18 @@
 # Amanda
 
-Amanda is a framework for developing cloud applications, and it is HTTPS-based. This framework takes a form quite different from many other frameworks. Rather than existing as a package that is imported, the framework is a software on its own. It can be turned into a custom cloud application, by adding you app services (and expanding the framework's capabilities, if you would like to).
+Amanda is a framework for developing cloud applications, and it is HTTPS-based. This framework takes a form quite different from many other frameworks. Rather than existing as a package that is imported, the framework is a software on its own. It can be turned into a custom cloud application, by adding your app services and other capabilities the app needs.
 
-The framework comes with useful components like logger, and alert raiser. The alert raiser is a component which can be used to send 'distress emails' to the admin of your cloud application. For instances, if something happens at runtime and requires immediate attention of the admin, the alert raiser can be used to send an email to the admin. The framework furthermore supports the use of a configuration file.
+### Pros
 
-Before doing anything with this framework, ensure all constants in file "ze30.Global.go" have been modified as appropriate.
+ - Built-in logger (which can be replaced)
+ - HTTP and HTTPS
+ - Configuration file support
+ - Highly extensible
+ - Support for admin services
+ - Simple and easy
+ - Lightweight 
+
+### Cons
+
+ - IPv6 currently not fully supported
 

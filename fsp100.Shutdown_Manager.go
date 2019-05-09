@@ -16,7 +16,7 @@ var shutdown_Manager service_Provider = func (response_Res http.ResponseWriter, 
         defer func () {
                 panic_Reason := recover ()
                 if panic_Reason != nil {
-                        logger ("shutdown_Manager () paniced while serving a request.")
+                        RECORD_LOG ("Paniced occured ---> \n Serving a request: shutdown_Manager ()")
                 }
         } ()
         // ... }
