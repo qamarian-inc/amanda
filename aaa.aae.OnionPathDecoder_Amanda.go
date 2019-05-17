@@ -21,12 +21,15 @@ func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error)
 	In addition to decoding onion-formatted filepaths, if a filepath's real form is a symbolic link, this function will evaluate the symbolic link into its extremely-real form.
 
 	EXPLANATION
-
 	If an onion filepath (lets say "./file.ext") decodes to "/pathA/file.ext", and this filepath (/pathA/file.ext) is a symlink which points to "/pathB/file.ext" (another symlink), and "/pathB/file.ext" further points to "/pathC/file.ext" which is a real filepath, then the input of "./file.ext" would result into the output of "/pathC/file.ext".
 
-	If any error is encountered, this function returns an empty string and the error. 
-	*/
+	INPUT
+	input 0: The onion filepath to be decoded.
 
+	OUTPT
+	outpt 0: The decoded form of input 0. On successful decoding, value would be the decoded form of input 0. On failed decoding, value would be an empty string.
+
+	outpt 1: Any error that occurs during decoding. On successful decoding, value would be nil. On failed decoding, value would the error that occured. */
 
 	// If a panic should occur, it is prevented from affecting other components. { ...
 	err = errors.New ("iDecode_OnionPathDecoder_Amanda () paniced.") // This error will be returned if a panic should occur.

@@ -34,7 +34,7 @@ func init () { // Initializes this component. The initialization basically means
 	CONFILE_ConfDataProvider_Amanda, errD := iDecode_vcOnionPathDecoder_Amanda (CONFILE_ConfDataProvider_Amanda)
 
 	if errD != nil {
-		output (fmt.Sprintf ("Startup Error: %s ---> \n Decoding the configuration filepath from its onion form to its real form: init () in aaa.aag.ConfDataProvider_Amanda.go", errD.Error ()))
+		iOutput_vcCustomizedOutput_Amanda (fmt.Sprintf ("Startup Error: %s ---> \n Decoding the configuration filepath from its onion form to its real form: init () in aaa.aag.ConfDataProvider_Amanda.go", errD.Error ()))
 		os.Exit (1)
         }
 
@@ -42,7 +42,7 @@ func init () { // Initializes this component. The initialization basically means
 	conf, errX := viper_Interface.New_Viper (CONFILE_ConfDataProvider_Amanda, "yaml")
 
 	if errX != nil {
-		output (fmt.Sprintf ("Startup Error: %s ---> \n Loading configuration file: init () in aaa.aag.ConfDataProvider_Amanda.go", errX.Error ()))
+		iOutput_vcCustomizedOutput_Amanda (fmt.Sprintf ("Startup Error: %s ---> \n Loading configuration file: init () in aaa.aag.ConfDataProvider_Amanda.go", errX.Error ()))
 		os.Exit (1)
         }
 
@@ -52,9 +52,13 @@ func init () { // Initializes this component. The initialization basically means
 
 func iScalarData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of a scalar data, from the configuration file.
 
-	If the data is set in the configuration file, the value of the data and nil error, are returned.
+	INPUT
+	input 0: The name of the data to be fetched.
 
-	If the data is not set, an empty string and error "eDATANOTSET_ConfDataProvider_Amanda", are returned. */
+	OUTPT
+	outpt 0: The value of the data. Value would be an empty string if any error should occur during the fetch.
+	
+	outpt 1: Any error that occurs during the fetch. On successful fetch, value would be nil. On failed fetch, value would the error that occured. If the data is not set, value would be error "eDATANOTSET_ConfDataProvider_Amanda". */
 
 	if ! dConf_ConfDataProvider_Amanda.IsSet (dataName) {
 		return "", eDATANOTSET_ConfDataProvider_Amanda
@@ -63,27 +67,35 @@ func iScalarData_ConfDataProvider_Amanda (dataName string) (string, error) { /* 
 	return dConf_ConfDataProvider_Amanda.GetString (dataName), nil
 }
 
-func iSliceData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of an array data, from the configuration file.
+func iSliceData_ConfDataProvider_Amanda (dataName string) ([]string, error) { /* This interface helps fetch the value of an array data, from the configuration file.
 
-	If the configuration data is set in the configuration file, the value of the data and nil error, are returned.
+	INPUT
+	input 0: The name of the data to be fetched.
 
-	If the configuration data is not set, an empty string and error "eDATANOTSET_ConfDataProvider_Amanda", are returned. */
+	OUTPT
+	outpt 0: The value of the data. Value would be an empty slice if any error should occur during the fetch.
+	
+	outpt 1: Any error that occurs during the fetch. On successful fetch, value would be nil. On failed fetch, value would the error that occured. If the data is not set, value would be error "eDATANOTSET_ConfDataProvider_Amanda". */
 
 	if ! dConf_ConfDataProvider_Amanda.IsSet (dataName) {
-		return "", eDATANOTSET_ConfDataProvider_Amanda
+		return []string {}, eDATANOTSET_ConfDataProvider_Amanda
 	}
 
 	return dConf_ConfDataProvider_Amanda.GetStringSlice (dataName), nil
 }
 
-func iMapData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of a hash map data, from the configuration file.
+func iMapData_ConfDataProvider_Amanda (dataName string) (data map[string]string, err error) { /* This interface helps fetch the value of a hash map data, from the configuration file.
 
-	If the configuration data is set in the configuration file, the value of the data and nil error, are returned.
+	INPUT
+	input 0: The name of the data to be fetched.
 
-	If the configuration data is not set, an empty string and error "eDATANOTSET_ConfDataProvider_Amanda", are returned. */
+	OUTPT
+	outpt 0: The value of the data. Value would be an empty map if any error should occur during the fetch.
+	
+	outpt 1: Any error that occurs during the fetch. On successful fetch, value would be nil. On failed fetch, value would the error that occured. If the data is not set, value would be error "eDATANOTSET_ConfDataProvider_Amanda". */
 
 	if ! dConf_ConfDataProvider_Amanda.IsSet (dataName) {
-		return "", eDATANOTSET_ConfDataProvider_Amanda
+		return data, eDATANOTSET_ConfDataProvider_Amanda
 	}
 
 	return dConf_ConfDataProvider_Amanda.GetStringMapString (dataName), nil
