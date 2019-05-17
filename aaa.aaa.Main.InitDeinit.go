@@ -1,5 +1,7 @@
 package main
 
+/* This file is an etc file of component "aaa.aaa". It is the file where you should add custom init and deinit functions of components. */
+
 const dInitFunction_Main [] func () = [] func () {
 	// Add the names of your special case init functions. All special case init functions added will be called after all init () functions have been called. Also, special case init functions added, will be called in the other that they were added.
 }

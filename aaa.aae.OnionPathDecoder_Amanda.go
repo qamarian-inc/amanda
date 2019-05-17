@@ -1,6 +1,12 @@
 package main
 
-/* This component decodes an onion-formatted filepath into its real form. */
+/* This component decodes an onion filepath into its real form. If the real form of the filepath is a symlink, the symlink will be further evaluated into its extremely-real form. 
+
+   To use this component, simply call its interface "iDecode_OnionPathDecoder_Amanda ()".
+
+   On success, the decoded form of the filepath will be returned, as well as a nil error. On failure, an empty string will be returned, as well as an error indicating the cause of failure.
+
+*/
 
 import (
 	"errors"
@@ -10,11 +16,13 @@ import (
 	"strings"
 )
 
-func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error) { /* This interface decodes an onion-formatted filepath, into its real form.
+func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error) { /* This interface decodes an onion filepath, into its real form.
 
-	In addition to decoding onion-formatted filepaths, if a filepath's real form is a symbolic link, this function will evaluate the symbolic link into its extreme real form.
+	In addition to decoding onion-formatted filepaths, if a filepath's real form is a symbolic link, this function will evaluate the symbolic link into its extremely-real form.
 
-	For example: if the onion filepath has the real form "/home/user/file.ext", and this filepath is a symlink that points to "/bin/user/file.ext", and this "/bin/user/file.ext" is another symlink and points to "/usr/user/file.ext" which is the actual file, then the output of this function (for this example) will be "/usr/user/file.ext".
+	EXPLANATION
+
+	If an onion filepath (lets say "./file.ext") decodes to "/pathA/file.ext", and this filepath (/pathA/file.ext) is a symlink which points to "/pathB/file.ext" (another symlink), and "/pathB/file.ext" further points to "/pathC/file.ext" which is a real filepath, then the input of "./file.ext" would result into the output of "/pathC/file.ext".
 
 	If any error is encountered, this function returns an empty string and the error. 
 	*/

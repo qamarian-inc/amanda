@@ -6,6 +6,6 @@ import (
 	"fmt"
 )
 
-func iOutput_EasyToReadOutput_Amanda (outputString string) {
+func iOutput_EasyToReadOutput_Amanda (outputString string) { // This interface outputs customized output.
 	fmt.Println (fmt.Sprintf ("\n    $ (Amanda): %s", outputString))
 }
