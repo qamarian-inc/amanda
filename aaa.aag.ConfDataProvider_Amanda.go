@@ -26,11 +26,11 @@ import (
         "os"
 )
 
-const CONFILE_ConfDataProvider_Amanda string = "./aaa.aag.dConf.yml" // You can modify this constant if your app's configuration file would be called "aaa.aag.dConf.yml" or wouldn't be present in the app's current working directory. Filepath format: onion.
+const CONFILE_ConfDataProvider_Amanda string = "./aaa.aag.dConf.yml" // You can modify this constant if your app's configuration file wouldn't be file "aaa.aag.dConf.yml" or if file "aaa.aag.dConf.yml" wouldn't be present in the app's current working directory. Filepath format supported: onion.
 
 func init () { // Initializes this component. The initialization basically means caching the configuration file.
 	
-	// Decoding the configuration file path from its onion form into its real form.
+	// Decoding the configuration filepath from its onion form into its real form.
 	CONFILE_ConfDataProvider_Amanda, errD := iDecode_vcOnionPathDecoder_Amanda (CONFILE_ConfDataProvider_Amanda)
 
 	if errD != nil {
@@ -50,7 +50,7 @@ func init () { // Initializes this component. The initialization basically means
         dConf_ConfDataProvider_Amanda = conf
 }
 
-func iScalarData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface provides the value of scalar data in the configuration file.
+func iScalarData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of a scalar data, from the configuration file.
 
 	If the data is set in the configuration file, the value of the data and nil error, are returned.
 
@@ -63,7 +63,7 @@ func iScalarData_ConfDataProvider_Amanda (dataName string) (string, error) { /* 
 	return dConf_ConfDataProvider_Amanda.GetString (dataName), nil
 }
 
-func iSliceData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface provides the value of array data in the configuration file.
+func iSliceData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of an array data, from the configuration file.
 
 	If the configuration data is set in the configuration file, the value of the data and nil error, are returned.
 
@@ -76,7 +76,7 @@ func iSliceData_ConfDataProvider_Amanda (dataName string) (string, error) { /* T
 	return dConf_ConfDataProvider_Amanda.GetStringSlice (dataName), nil
 }
 
-func iMapData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface provides the value of hash map data in the configuration file.
+func iMapData_ConfDataProvider_Amanda (dataName string) (string, error) { /* This interface helps fetch the value of a hash map data, from the configuration file.
 
 	If the configuration data is set in the configuration file, the value of the data and nil error, are returned.
 

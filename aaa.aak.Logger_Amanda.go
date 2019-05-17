@@ -1,13 +1,6 @@
 package main
 
-import (
-	"errors"
-	"fmt"
-	qamarian_Logger "github.com/qamarian-inc/logger"
-	"os"
-)
-
-/* This component implements a synchronous logger which does not trigger the creation of more than one OS thread.
+/* This component is a logger. When different goroutines simultanously ask it to record logs, it queues all the request, then records them one-by-one, instead of trying to write them to the log file all at once (thereby degrading the performance of the app using it). In short, this logger is designed not to degrade the performance of apps using it, unlike most other loggers. 
 
    This component has special case init and deinit functions, and they should be registered with component "aaa.aaa".
 
@@ -17,6 +10,13 @@ import (
    	Virtual component aaa.aaf (Configuration data provider)
    	Virtual component aaa.aah (Critical Event Zain)
 */
+
+import (
+	"errors"
+	"fmt"
+	qamarian_Logger "github.com/qamarian-inc/logger"
+	"os"
+)
 
 func iInit_Logger_Amanda () { // Initializes this component. Remember to register this with component "aaa.aaa".
 

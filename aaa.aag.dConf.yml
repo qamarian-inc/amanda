@@ -1,6 +1,6 @@
 # This file will be used as a configuration file, by Amanda component aaa.aag. Syntax "YAML".
 
-# Examples --->
+# Configuration data examples --->
 
 ScalarData1: "String"
 
