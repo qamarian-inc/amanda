@@ -2,11 +2,7 @@ package main
 
 /* This component decodes an onion filepath into its real form. If the real form of the filepath is a symlink, the symlink will be further evaluated into its extremely-real form. 
 
-   To use this component, simply call its interface "iDecode_OnionPathDecoder_Amanda ()".
-
-   On success, the decoded form of the filepath will be returned, as well as a nil error. On failure, an empty string will be returned, as well as an error indicating the cause of failure.
-
-*/
+   To use this component, simply call its interface "iDecode_OnionPathDecoder_Amanda ()". */
 
 import (
 	"errors"

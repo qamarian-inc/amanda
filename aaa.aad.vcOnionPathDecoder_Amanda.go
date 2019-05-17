@@ -2,7 +2,7 @@ package main
 
 /* This virtual component decodes an onion path into its actual form. */
 
-var iDecode_vcOnionPathDecoder_Amanda func (string) (string, error) = iDecode_OnionPathDecoder_Amanda/* This interface decodes an onion filepath.
+const iDecode_vcOnionPathDecoder_Amanda func (string) (string, error) /* This interface decodes an onion filepath.
 
 	INPUT
 	input 0: The onion filepath to be decoded.

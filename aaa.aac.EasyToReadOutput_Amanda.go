@@ -1,6 +1,6 @@
 package main
 
-/* This component can be used to output data to the console, in an easy-to-read format. */
+/* This component can be used to output data to the console, in an easy-to-read format. Simply call its interface "iOutput_EasyToReadOutput_Amanda ()", to use. */
 
 import "fmt"
 

@@ -2,7 +2,10 @@ package main
 
 /* This component makes possible the use of configuration file, in your app. The component uses the YAML syntax for its configuration file.
 
-   USAGE
+   DEPENDENCIES
+	Virtual component aaa.aad (Onion path decoder)
+
+   USAGE NOTE
    	1. Ensure the conf file specified in "CONFILE_ConfDataProvider_Amanda", is available on the machine where the app would run.
 
    	2. Any data set in your conf file, can be fetched using any of interfaces:
@@ -13,9 +16,6 @@ package main
    		The interface to use among the three, would depend on what kind of conf data you're trying to fetch.
 
    		This component comes with a default configuration file known as "aaa.aag.dConf.yml".
-
-   DEPENDENCIES
-	Virtual component aaa.aad (Onion path decoder)
 */
 
 import (
@@ -31,7 +31,7 @@ const CONFILE_ConfDataProvider_Amanda string = "./aaa.aag.dConf.yml" // You can 
 func init () { // Initializes this component. The initialization basically means caching the configuration file.
 	
 	// Decoding the configuration filepath from its onion form into its real form.
-	CONFILE_ConfDataProvider_Amanda, errD := iDecode_vcOnionPathDecoder_Amanda (CONFILE_ConfDataProvider_Amanda)
+	conFilepath, errD := iDecode_vcOnionPathDecoder_Amanda (CONFILE_ConfDataProvider_Amanda)
 
 	if errD != nil {
 		iOutput_vcCustomizedOutput_Amanda (fmt.Sprintf ("Startup Error: %s ---> \n Decoding the configuration filepath from its onion form to its real form: init () in aaa.aag.ConfDataProvider_Amanda.go", errD.Error ()))
@@ -39,7 +39,7 @@ func init () { // Initializes this component. The initialization basically means
         }
 
         // Loading the configuration file.
-	conf, errX := viper_Interface.New_Viper (CONFILE_ConfDataProvider_Amanda, "yaml")
+	conf, errX := viper_Interface.New_Viper (conFilepath, "yaml")
 
 	if errX != nil {
 		iOutput_vcCustomizedOutput_Amanda (fmt.Sprintf ("Startup Error: %s ---> \n Loading configuration file: init () in aaa.aag.ConfDataProvider_Amanda.go", errX.Error ()))
