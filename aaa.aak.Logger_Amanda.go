@@ -19,7 +19,7 @@ package main
 
    2. When about starting an app whose source code contains this component, do the following:
    	- create a log file
-   	- set the logfile's path as conf data "aaa_aak_LogfilePath", in the apps conf file
+   	- set the logfile's path as conf data "aaa_aak_LogfilePath", in the conf file of dependency aaa.aaf (remember "aaa.aaf" was listed as one of the dependencies needed by this component)
 
    3. To tell this component to record a log, use interface "iRecord_Logger_Amanda ()".
 */
