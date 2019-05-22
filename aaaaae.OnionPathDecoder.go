@@ -2,7 +2,7 @@ package main
 
 /* This component decodes an onion filepath into its real form. If the real form of the filepath is a symlink, the symlink will be further evaluated into its extremely-real form. 
 
-   To use this component, simply call its interface "iDecode_OnionPathDecoder_Amanda ()". */
+   To use this component, simply call its interface "iDecode_AAAAAE ()". */
 
 import (
 	"errors"
@@ -12,9 +12,9 @@ import (
 	"strings"
 )
 
-func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error) { /* This interface decodes an onion filepath, into its real form.
+func iDecode_AAAAAE (onionPath string) (path string, err error) { /* This interface decodes an onion filepath, into its real form.
 
-	In addition to decoding onion-formatted filepaths, if a filepath's real form is a symbolic link, this function will evaluate the symbolic link into its extremely-real form.
+	In addition to decoding onion-formatted filepaths, if an onion path decodes to a symbolic link, this function further evaluates the symbolic link into its extremely-real form.
 
 	EXPLANATION
 	If an onion filepath (lets say "./file.ext") decodes to "/pathA/file.ext", and this filepath (/pathA/file.ext) is a symlink which points to "/pathB/file.ext" (another symlink), and "/pathB/file.ext" further points to "/pathC/file.ext" which is a real filepath, then the input of "./file.ext" would result into the output of "/pathC/file.ext".
@@ -28,7 +28,7 @@ func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error)
 	outpt 1: Any error that occurs during decoding. On successful decoding, value would be nil. On failed decoding, value would the error that occured. */
 
 	// If a panic should occur, it is prevented from affecting other components. { ...
-	err = errors.New ("iDecode_OnionPathDecoder_Amanda () paniced.") // This error will be returned if a panic should occur.
+	err = errors.New ("iDecode_AAAAAE () paniced.") // This error will be returned if a panic should occur.
 
 	defer func () {
 		panicReason := recover ()
@@ -44,30 +44,34 @@ func iDecode_OnionPathDecoder_Amanda (onionPath string) (path string, err error)
 		programFileDir, errX := os.Executable ()
 
 		if errX != nil {
-			errorMessage := fmt.Sprintf ("%s ---> \n Fetching directory of this program's file: iDecode_OnionPathDecoder_Amanda ()", errX.Error ())
+			errorMessage := fmt.Sprintf ("%s ---> \n Fetching directory of this program's file: iDecode_AAAAAE ()", errX.Error ())
 			return "", errors.New (errorMessage)
 		}
 
-		onionPath = strings.Replace (onionPath, "*/", programFileDir, 1)
+		pathSeparator := fmt.Sprintf ("%c", os.PathSeparator)
 
-	} else if strings.Index (onionPath, "*/") == 0 {
+		onionPath = strings.Replace (onionPath, "*/", (filepath.Dir (programFileDir) + pathSeparator), 1)
+
+	} else if strings.Index (onionPath, "./") == 0 {
 	// If the filepath starts with "./", "./" is replaced with the present working directory.
 
 		presentWorkingDir, errY := os.Getwd ()
 
 		if errY != nil {
-			errorMessage := fmt.Sprintf ("%s ---> \n Fetching present working directory: iDecode_OnionPathDecoder_Amanda ()", errY.Error ())
+			errorMessage := fmt.Sprintf ("%s ---> \n Fetching present working directory: iDecode_AAAAAE ()", errY.Error ())
 			return "", errors.New (errorMessage)
 		}
 
-		onionPath = strings.Replace (onionPath, "*/", presentWorkingDir, 1)
+		pathSeparator := fmt.Sprintf ("%c", os.PathSeparator)
+
+		onionPath = strings.Replace (onionPath, "./", (presentWorkingDir + pathSeparator), 1)
 	}
 
 	// In case the real form of the onion filepath is a symlink, the symlink will be evaluated into its extreme real form.
 	onionPath, errZ := filepath.EvalSymlinks (onionPath)
 
 	if errZ != nil {
-		errorMessage := fmt.Sprintf ("%s ---> \n Translating symlink into the actual file path: iDecode_OnionPathDecoder_Amanda ()", errZ.Error ())
+		errorMessage := fmt.Sprintf ("%s ---> \n Translating symlink into the actual file path: iDecode_AAAAAE ()", errZ.Error ())
 		return "", errors.New (errorMessage)
 	}
 
