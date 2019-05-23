@@ -1,0 +1,19 @@
+# This file will be used as a configuration file, by Amanda component aaa.aag. Syntax "YAML".
+
+# Configuration data examples --->
+
+ScalarData1: "String"
+
+ScalarData2: 10023
+
+ScalarData3: true
+
+SliceData:
+  - "127.0.0.1"
+  - 80
+  # YAML short syntax for array are of course supported.
+
+MapData:
+  Addr: "127.0.0.1"
+  Port: 80
+  # YAML short syntax for dict are of course supported.
